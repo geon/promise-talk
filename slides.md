@@ -1,16 +1,40 @@
 
 
 
+```js
+readSomeSettings(function (error, settings) {
+
+	if (error) {
+
+		console.log(error);
+		return;
+	}
+
+	var relevantPieceOfSettings = extractRelevantPiece(settings);
+
+	fetchDataBasedOnSettings(
+		relevantPieceOfSettings,
+		function (error, dataInJSONFormattedText) {
+
+			if (error) {
+
+				console.log(error);
+				return;
+			}
+
+			var data = JSON.parse(dataInJSONFormattedText);
+
+			doStuffWithIt(data);
+		})
+	);
+});
+```
+
+
 
 Implementing async functions is dramatically more tedious than using them:
 
 ```js
-
-function readSettings () {
-
-	return fsp.readFile('settings.json')
-		.then(JSON.parse);
-}
 
 
 function readSettings (callback) {
@@ -36,6 +60,15 @@ function readSettings (callback) {
 
 		callback(null, json);
 	});
+}
+
+
+
+
+function readSettings () {
+
+	return fsp.readFile('settings.json')
+		.then(JSON.parse);
 }
 
 ```
