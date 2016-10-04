@@ -35,8 +35,6 @@ readSomeSettings(function (error, settings) {
 Implementing async functions is dramatically more tedious than using them:
 
 ```js
-
-
 function readSettings (callback) {
 
 	fs.readFile('settings.json', function(error, data) {
@@ -63,13 +61,6 @@ function readSettings (callback) {
 }
 
 
-
-
-function readSettings () {
-
-	return fsp.readFile('settings.json')
-		.then(JSON.parse);
-}
 
 ```
 
@@ -109,7 +100,45 @@ In my experience with working with js promises over the last 2 years, I learned 
 
 At first, my code looked pretty much like the regular callback-hell based code.
 
+
+
+Basic syntax
+------------
+
 ```js
+somePromise
+	.then(function (theValue) {
+
+		// ...
+
+		// Gets wrapped in a promise, and is returned from the `then` method.
+		return somethingElse;
+	})
+	.then(function (theReturnValueFromLastThen) {
+
+		// ...
+
+		throw new Error('Halp!');
+	})
+	.catch(function (anyErrorThrownAbove) {
+
+		// ...
+	})
+```
+
+
+
+
+
+
+```js
+
+function readSettings () {
+
+	return fsp.readFile('settings.json')
+		.then(JSON.parse);
+}
+
 readSomeSettings
 	.then(function (settings) {
 
