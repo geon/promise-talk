@@ -1,0 +1,6 @@
+* exempel med fadeout i jQuery med flera element, där ett är redan dolt.
+* ett spel som ska ladda sprites.
+	* hur löser man det utan promises?
+		* skicka med ett callback för start och ett för stopp, räkna båda.
+		* returnera antalet sprites
+	* kan användas för en progress-bar.

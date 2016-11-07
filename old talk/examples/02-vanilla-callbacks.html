@@ -1,0 +1,42 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<style>
+
+			button {
+
+				font-size: 30px;
+				display: block;
+				margin: 50px;
+			}
+
+			button.crash {
+
+				color: red;
+				background: black;
+			}
+
+		</style>
+	</head>
+
+	<body>
+
+
+		<button>vanillaCallbackTimeout</button>
+		<button class="crash">vanillaCallbackTimeout</button>
+		<button>deepVanillaCallbackTimeout</button>
+		<button class="crash">deepVanillaCallbackTimeout</button>
+		<button class="crash">exceptionProofVanillaCallbackTimeout</button>
+
+
+
+
+
+		<script src="q.js"></script>
+		<script src="jquery-2.1.0.min.js"></script>
+
+		<script src="02-vanilla-callbacks.js"></script>
+
+	</body>
+</html>

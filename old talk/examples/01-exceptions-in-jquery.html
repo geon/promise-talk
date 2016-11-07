@@ -1,0 +1,48 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<style>
+
+			button {
+
+				font-size: 30px;
+				display: block;
+				margin: 50px;
+			}
+
+			button.crash {
+
+				color: red;
+				background: black;
+			}
+
+		</style>
+	</head>
+
+	<body>
+
+<!--
+		<button>testAsynchronousUppercase</button>
+		<button class="crash">testAsynchronousUppercase</button>
+		<button>testBrokenAsynchronousUppercase</button>
+-->
+
+
+		<button>messyAsynchronousUppercase</button>
+		<button>goodAsynchronousUppercase</button>
+		<button>betterAsynchronousUppercase</button>
+		<button>brokenAsynchronousUppercase</button>
+		<button class="crash">brokenAsynchronousUppercase</button>
+		<button class="crash">goodAsynchronousUppercase</button>
+
+
+
+
+		<script src="q.js"></script>
+		<script src="jquery-2.1.0.min.js"></script>
+
+		<script src="01-exceptions-in-jquery.js"></script>
+
+	</body>
+</html>

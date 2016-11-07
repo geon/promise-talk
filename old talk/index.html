@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+
+		<style>
+
+			code.super-large {
+
+			 	font-size: 300%;
+			 	line-height:100%;
+			}
+	
+		 </style>
+
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+
+				<section>
+					<h1>Javascript promises i praktiken</h1>
+					<p class="fragment">Hur du kan bygga gränssnitt och Ajax, utan att vilja sticka ut ögonen med en gaffel.</p>
+				</section>
+
+
+				<section>
+					<h1>Vad är promises?</h1>
+					<p class="fragment">Ett sätt att strukturera asynkron programmering.</p>
+					<br><br>
+					<p class="fragment">...</p>
+					<p class="fragment">Asynk-vaförnåt?</p>
+				</section>
+
+
+				<section>
+					<h1>Vad är asynkron programmering?</h1>
+					<p class="fragment">Vänta på t.ex. IO utan att frysa.</p>
+					<p class="fragment">Separation över tid kod av som hör ihop.</p>
+				</section>
+
+
+				<section>
+					<h2>AJAX</h2>
+					<p class="fragment">Lätt en sekund eller mer.</pre>
+				</section>
+
+
+				<section>
+					<h2>Animation</h2>
+					<p class="fragment">Lättare att hänga med.</p>
+					<ul class="fragment">
+						<li>$(this).fadeOut();</li>			
+						<li>setTimeout(...)</li>
+					</ul>
+				</section>
+
+
+				<section>
+					<h2>Filer / datbaser</h2>
+					<p class="fragment">Node</pre>
+				</section>
+
+
+				<section>
+					<h2>Gränssnitt</h2>
+					<pre class="fragment"><code data-trim contenteditable class="super-large">
+10 INPUT A$ // Musklick
+20 PROCESS  // onclick
+30 PRINT A$
+40 GOTO 10
+					</code></pre>
+				</section>
+
+
+				<section>
+					<pre class="fragment"><code data-trim contenteditable class="super-large">
+someAsynchronousTask()
+	.then(function(data){
+
+		// Do stuff.
+	});
+					</code></pre>
+				</section>
+
+
+				<section>
+					<h2>Implementationer</h2>
+					<p>Specificeras av CommonJS Promises/A(+)</p>
+					<ul>
+						<li>when.js</li>			
+						<li>Q</li>
+						<li class="fragment">jQuery</li>
+					</ul>
+				</section>
+
+
+				<section>
+					<h2>Hur de används</h2>
+					<p></p>
+					<pre><code data-trim contenteditable style="font-size: 18px;">
+
+// TODO
+// Flytta ut större exempel till egna, körbara filer.
+
+function asynchronousUppercase (s) {
+	var deferred = Q.defer();
+	setTimeout(function(){
+		deferred.resolve(s.toUpperCase());
+	}, 1000);
+	return deferred.promise;
+}
+
+
+function asynchronousUppercase (s) {
+	var promise = $.Deferred();
+	setTimeout(function(){
+		promise.resolve(s.toUpperCase());
+	}, 1000);
+	return promise;
+}
+
+SetTimeout har fortfarande ett callback. Osmidigt. Crashar dessutom besvärligt med exceptions.
+
+Kan lösas om man wrappar setTimeout i ett promise:
+
+
+function promiseSetTimeout (callback) {
+	var promise = $.Deferred();
+	promise.then(callback);
+	setTimeout(function(){
+		promise.resolve();
+	}, 1000);
+	return promise;
+}
+
+Eller ännu bättre med Q's inbyggda: delay():
+
+function asynchronousUppercase (s) {
+	return Q.delay(function(){
+		promise.resolve(s.toUpperCase());
+	}, 1000);
+}
+
+
+
+
+
+
+
+asynchronousUppercase("lowercase text")
+	.then(function(s){
+		console.log(s);
+	}, function(error){
+		console.log(error);
+	});
+					</code></pre>
+				</section>
+
+
+				<section>
+					<h2>Mini-jämförelse med callbacks</h2>
+					<pre><code data-trim contenteditable style="font-size: 18px;">
+$.ajax({
+	url: someURL,
+	success: function(data){
+
+		// Handle the data.
+	}
+})
+					</code></pre>
+					<pre><code data-trim contenteditable style="font-size: 18px;">
+$.ajax({
+	url: someURL
+})
+	.then(function(data){
+
+		// Handle the data.
+	});
+					</code></pre>
+				</section>
+
+
+				<section>
+					<h2>jQuery returnerar promises!</h2>
+					<pre><code data-trim contenteditable class="super-large">
+$.get(someURL);
+
+$("#intro").fadeIn()
+	.promise();
+
+					</code></pre>
+				</section>
+
+
+
+				<section>
+					<h2>Genomgång av demo-app</h2>
+				</section>
+
+
+				<section>
+					<h2>Smidiga delar</h2>
+				</section>
+
+
+				<section>
+					<h2>Mindre smidiga delar</h2>
+				</section>
+
+
+				<section>
+					<h2>Loopar</h2>
+				</section>
+
+
+				<section>
+					<h2>Lösningar</h2>
+				</section>
+
+
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
